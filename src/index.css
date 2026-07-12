@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import "tailwindcss";
+
+@theme {
+  /* ── Typography ── */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* ── MD3 Color Tokens ── */
+
+  /* Primary */
+  --color-primary: #0058be;
+  --color-primary-container: #d5e4ff;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #001845;
+
+  /* Secondary */
+  --color-secondary: #545f73;
+  --color-secondary-container: #d5e0f8;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #111c2e;
+
+  /* Tertiary */
+  --color-tertiary: #924700;
+  --color-tertiary-container: #ffdcc5;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #301400;
+
+  /* Background & Surface */
+  --color-background: #f9f9ff;
+  --color-on-background: #1a1c22;
+  --color-surface: #f9f9ff;
+  --color-on-surface: #1a1c22;
+  --color-on-surface-variant: #43474e;
+
+  /* Surface containers (elevation levels) */
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f3f3fb;
+  --color-surface-container: #ecedf7;
+  --color-surface-container-high: #e6e7f1;
+  --color-surface-container-highest: #e0e1eb;
+
+  /* Outline */
+  --color-outline: #727785;
+  --color-outline-variant: #c3c6cf;
+
+  /* Error */
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #410002;
+
+  /* Inverse */
+  --color-inverse-surface: #2f3038;
+  --color-inverse-on-surface: #f1f0f9;
+  --color-inverse-primary: #aac7ff;
+}
+
+/* ── Material Symbols: variable font settings ── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  user-select: none;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ── Global base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9f9ff;
+  color: #1a1c22;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbars ── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c3c6cf;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #727785;
+}
+
+/* ── Smooth transitions for interactive elements ── */
+button, a, input, select, textarea {
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ── Page fade-in animation ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* ── Slide up for modals ── */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
