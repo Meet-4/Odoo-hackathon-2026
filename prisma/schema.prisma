@@ -1,0 +1,139 @@
+datasource db {
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated-client"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String?
+  dept         String?
+  role         String   @default("Employee")
+  jobTitle     String?
+  avatar       String?
+  status       String   @default("Active")
+
+  departments  Department[]        @relation("DeptHead")
+  tickets      MaintenanceTicket[] @relation("Technician")
+}
+
+model Department {
+  id           String   @id @default(uuid())
+  name         String
+  head         String?
+  headAvatar   String?
+  parentDept   String?
+  status       String   @default("Active")
+  
+  headOfDeptId String?
+  headOfDept   User?    @relation("DeptHead", fields: [headOfDeptId], references: [id])
+  
+  assets       Asset[]
+}
+
+model Asset {
+  tag                String   @id
+  name               String
+  category           String?
+  status             String   @default("Available")
+  location           String?
+  serial             String?
+  image              String?
+  assignee           String?
+  allocatedTo        String?
+  allocatedToDept    String?
+  dueDate            String?
+  expectedLocation   String?
+  
+  allocationHistory  String   @default("[]") // Stored as JSON string
+  maintenanceHistory String   @default("[]") // Stored as JSON string
+  
+  lastVerified       String?
+  verificationStatus String?
+
+  departmentId       String?
+  department         Department? @relation(fields: [departmentId], references: [id])
+  
+  tickets            MaintenanceTicket[]
+}
+
+model MaintenanceTicket {
+  id              String   @id @default(uuid())
+  assetTag        String
+  title           String?
+  description     String
+  priority        String   @default("NORMAL")
+  column          String   @default("PENDING")
+  assignee        String?
+  assigneeAvatar  String?
+  reportedTime    String?
+  raisedBy        String?
+  raisedByDept    String?
+  rejectedReason  String?
+  isRejected      Boolean  @default(false)
+  
+  asset           Asset?   @relation(fields: [assetTag], references: [tag])
+  
+  technicianId    String?
+  technician      User?    @relation("Technician", fields: [technicianId], references: [id])
+  
+  createdAt       DateTime @default(now())
+}
+
+model TransferRequest {
+  id              String   @id @default(uuid())
+  assetTag        String
+  assetName       String
+  requestedBy     String
+  requestedByDept String?
+  currentHolder   String?
+  requestType     String
+  targetHolder    String?
+  targetDept      String?
+  reason          String
+  status          String   @default("Pending")
+  rejectionReason String?
+  requestedAt     String
+  resolvedAt      String?
+  resolvedBy      String?
+}
+
+model Booking {
+  id           String   @id @default(uuid())
+  resource     String
+  title        String
+  timeRange    String
+  startHour    Int
+  endHour      Int
+  date         String
+  bookedBy     String?
+  bookedByDept String?
+  status       String?
+  isConflict   Boolean  @default(false)
+}
+
+model Notification {
+  id            String   @id @default(uuid())
+  recipientName String
+  title         String
+  message       String
+  icon          String
+  type          String
+  timestamp     String
+  isRead        Boolean  @default(false)
+}
+
+model ActivityLog {
+  id          String   @id @default(uuid())
+  icon        String
+  type        String
+  title       String
+  description String
+  timestamp   String
+  isAlert     Boolean  @default(false)
+}
